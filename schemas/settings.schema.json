@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:crosshair-native:settings:1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "theme"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "language": {
+      "const": "it-IT"
+    },
+    "theme": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "favorites": {
+      "type": "array",
+      "maxItems": 512,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "recents": {
+      "type": "array",
+      "maxItems": 40,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "autoStart": {
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "type": "boolean"
+    }
+  }
+}

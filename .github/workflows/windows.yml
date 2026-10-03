@@ -1,0 +1,14 @@
+name: Windows native development build
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  native:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Restore locked WinUI dependencies
+        shell: pwsh
+        run: ./scripts/build-settings.ps1 -Restore
+      - name: Build engine, WinUI and tests
+        shell: pwsh
+        run: ./scripts/build.ps1 -Configuration Release
+      # Desktop/hardware acceptance tests still require an interactive session.

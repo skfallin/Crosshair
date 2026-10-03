@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:crosshair-native:preset:1",
+  "title": "Crosshair Native preset v1",
+  "$comment": "Runtime also limits UTF-8 bytes to 65536, JSON depth to 8, metadata to byte lengths, and transformed raster bounds to 127 pixels.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "layers"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "family": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "tags": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "string",
+        "maxLength": 60
+      }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "required": [
+          "shape",
+          "x",
+          "y",
+          "endX",
+          "endY",
+          "radius",
+          "thickness",
+          "outline",
+          "color"
+        ],
+        "properties": {
+          "shape": {
+            "enum": [
+              "dot",
+              "line",
+              "ring",
+              "png"
+            ]
+          },
+          "x": {
+            "type": "number",
+            "minimum": -96,
+            "maximum": 96
+          },
+          "y": {
+            "type": "number",
+            "minimum": -96,
+            "maximum": 96
+          },
+          "endX": {
+            "type": "number",
+            "minimum": -96,
+            "maximum": 96
+          },
+          "endY": {
+            "type": "number",
+            "minimum": -96,
+            "maximum": 96
+          },
+          "radius": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 96
+          },
+          "thickness": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 16
+          },
+          "outline": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "rotation": {
+            "type": "number",
+            "minimum": -360,
+            "maximum": 360
+          },
+          "color": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "width": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 192
+          },
+          "height": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 192
+          },
+          "nearest": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "shape": {
+                  "const": "png"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "assetId",
+                "width",
+                "height",
+                "nearest"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "author": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "license": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "permission": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      }
+    }
+  }
+}

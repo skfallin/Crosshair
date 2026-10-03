@@ -1,0 +1,10 @@
+{
+  "visualStudio": "17.14.37710.0",
+  "msvcToolset": "14.44.35207",
+  "compiler": "19.44.35229.0",
+  "windowsSdk": "10.0.26100.0",
+  "cmake": "3.31.6-msvc6",
+  "architecture": "x64",
+  "windowsAppSdk": "Microsoft.WindowsAppSDK.WinUI 1.8.260803003",
+  "note": "WinUI component pinned with C++/WinRT 2.0.250303.1; exact transitives and hashes in apps/settings/packages.lock.json"
+}

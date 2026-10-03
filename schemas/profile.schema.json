@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:crosshair-native:profile:1",
+  "title": "Crosshair Native development profile v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "enabled",
+    "backend",
+    "executablePath",
+    "windowClass",
+    "defaultPresetId",
+    "offsetX",
+    "offsetY",
+    "slots",
+    "bindings"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "backend": {
+      "const": "standard"
+    },
+    "executablePath": {
+      "type": "string",
+      "maxLength": 32767
+    },
+    "windowClass": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "defaultPresetId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "offsetX": {
+      "type": "integer",
+      "minimum": -8192,
+      "maximum": 8192
+    },
+    "offsetY": {
+      "type": "integer",
+      "minimum": -8192,
+      "maximum": 8192
+    },
+    "slots": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "presetId"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "presetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-z0-9-]+$"
+          }
+        }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": [
+          "device",
+          "code",
+          "extended",
+          "requiredModifiers",
+          "allowExtraModifiers",
+          "action",
+          "slot"
+        ],
+        "properties": {
+          "device": {
+            "enum": [
+              "keyboard",
+              "mouse"
+            ]
+          },
+          "code": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 127
+          },
+          "extended": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "requiredModifiers": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "allowExtraModifiers": {
+            "type": "boolean"
+          },
+          "action": {
+            "enum": [
+              "slot",
+              "hide",
+              "pause"
+            ]
+          },
+          "slot": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "device": {
+                  "const": "mouse"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    3,
+                    4,
+                    5
+                  ]
+                },
+                "extended": {
+                  "const": 0
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$comment": "Runtime also enforces UTF-8 byte limits, max 64 KiB/depth 8, one binding per action/slot, no ambiguity at equal specificity, and reserved-shortcut restrictions. Unknown properties are ignored, never executed."
+}
